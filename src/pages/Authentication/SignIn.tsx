@@ -1,14 +1,43 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+// import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb'
 import LogoDark from '../../images/logo/logo-dark.svg'
 import Logo from '../../images/logo/logo.svg'
-import DefaultLayout from '../../layout/DefaultLayout'
+// import DefaultLayout from '../../layout/DefaultLayout'
+import { useAuth } from '../../components/Auth/AuthContext'
+// import { set } from 'firebase/database'
 
 const SignIn: React.FC = () => {
+	const { signInWithEmailAndPasswordFunc } = useAuth()
+	const [email, setEmail] = useState('')
+	const [password, setPassword] = useState('')
+	const navigate = useNavigate()
+	const handleLogin = async () => {
+		try {
+			await signInWithEmailAndPasswordFunc(email, password)
+			console.log('signed in')
+			// Redirect to the dashboard after successful login
+			navigate('/')
+		} catch (error) {
+			console.error('Login error:', error)
+		}
+	}
 	return (
-		<DefaultLayout>
-			<Breadcrumb pageName="Sign In" />
+		// <DefaultLayout>
+		<>
+			{/* <Breadcrumb pageName="Sign In" /> */}
+			<div className="mb-6 p-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+				<h2 className="text-title-md2 font-semibold text-black dark:text-white items-center">
+					Sign In
+				</h2>
+
+				<nav>
+					<ol className="flex items-center gap-2">
+						<li className="font-medium text-primary">Sign in</li>
+					</ol>
+				</nav>
+			</div>
 
 			<div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
 				<div className="flex flex-wrap items-center">
@@ -167,6 +196,11 @@ const SignIn: React.FC = () => {
 									<div className="relative">
 										<input
 											type="email"
+											name="email"
+											value={email}
+											onChange={(e) =>
+												setEmail(e.target.value)
+											}
 											placeholder="* Enter your email"
 											className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
 										/>
@@ -197,6 +231,11 @@ const SignIn: React.FC = () => {
 									<div className="relative">
 										<input
 											type="password"
+											name="password"
+											value={password}
+											onChange={(e) =>
+												setPassword(e.target.value)
+											}
 											placeholder="* Enter password"
 											className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
 										/>
@@ -225,11 +264,12 @@ const SignIn: React.FC = () => {
 								</div>
 
 								<div className="mb-5">
-									<input
-										type="submit"
-										value="Sign In"
-										className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-									/>
+									<button
+										type="button"
+										onClick={handleLogin}
+										className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90">
+										Sign In
+									</button>
 								</div>
 
 								{/* <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
@@ -287,7 +327,8 @@ const SignIn: React.FC = () => {
 					</div>
 				</div>
 			</div>
-		</DefaultLayout>
+		</>
+		// </DefaultLayout>
 	)
 }
 
