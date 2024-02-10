@@ -27,10 +27,13 @@ const SignIn: React.FC = () => {
 		// <DefaultLayout>
 		<>
 			{/* <Breadcrumb pageName="Sign In" /> */}
+
 			<div className="mb-6 p-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 				<h2 className="text-title-md2 font-semibold text-black dark:text-white items-center">
 					Sign In
 				</h2>
+
+				{/* <DarkModeSwitcher /> */}
 
 				<nav>
 					<ol className="flex items-center gap-2">
@@ -316,7 +319,7 @@ const SignIn: React.FC = () => {
 									<p>
 										Forgot Password ?{' '}
 										<Link
-											to="/auth/signup"
+											to="/auth/resetPassword"
 											className="text-primary">
 											Click Here
 										</Link>
@@ -328,6 +331,7 @@ const SignIn: React.FC = () => {
 				</div>
 			</div>
 		</>
+
 		// </DefaultLayout>
 	)
 }
