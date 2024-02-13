@@ -1,7 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+*::-webkit-scrollbar {
+	width: 0.4rem;
+}
 
+*::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 6px #eff4fb;
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: #3c50e0;
+	outline: 1px solid #80caee;
+}
 @layer base {
 	body {
 		@apply font-satoshi font-normal text-base text-body bg-whiten relative z-1;

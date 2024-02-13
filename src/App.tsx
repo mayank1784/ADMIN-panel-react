@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
-import { AuthProvider, useAuth } from './components/Auth/AuthContext'
+import { AuthProvider } from './components/Auth/AuthContext'
 // import PrivateRoute from './components/Auth/PrivateRoute'
 
 import Loader from './common/Loader'

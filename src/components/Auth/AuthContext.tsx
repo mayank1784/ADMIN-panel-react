@@ -6,7 +6,7 @@ import {
 	signOut as signOutFirebase,
 	db,
 } from '../../services/firebase' // Adjust the import based on your project structure
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, onSnapshot } from 'firebase/firestore'
 import { sendPasswordResetEmail } from 'firebase/auth'
 
 interface AuthContextType {
@@ -29,18 +29,41 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 	const [adminData, setAdminData] = useState({})
 	const fetchAdminData = async (uid: string) => {
 		try {
-			// const adminDataRef = db.collection('admins').doc(uid)
 			const adminDataRef = doc(db, 'admins', uid)
-			const adminDataSnapshot = await getDoc(adminDataRef)
 
-			if (adminDataSnapshot.exists()) {
-				// Append admin data to the user object
-				setAdminData(adminDataSnapshot.data())
-			}
+			// const adminDataSnapshot = await getDoc(adminDataRef)
+
+			// if (adminDataSnapshot.exists()) {
+			// 	// Append admin data to the user object
+			// 	setAdminData(adminDataSnapshot.data())
+			// }
+			const unsubscribe = onSnapshot(
+				adminDataRef,
+				(adminDataSnapshot) => {
+					if (adminDataSnapshot.exists()) {
+						// Update adminData with the latest data
+						setAdminData(adminDataSnapshot.data())
+					}
+				}
+			)
+
+			// Return the unsubscribe function to clean up the listener when necessary
+			return unsubscribe
 		} catch (error) {
 			console.error('Error fetching admin data:', error)
 		}
 	}
+	useEffect(() => {
+		const unsubscribeAdminData = user ? fetchAdminData(user.uid) : () => {}
+
+		// Clean up the listener when the component unmounts or when the user changes
+		return () => {
+			if (typeof unsubscribeAdminData === 'function') {
+				unsubscribeAdminData()
+			}
+		}
+	}, [user])
+
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
 			if (authUser) {

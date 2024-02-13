@@ -49,7 +49,7 @@ const CreateUsersForm = () => {
 			console.log(processedData)
 
 			const result = await createUsersFunction({
-				users: [[processedData]],
+				users: [processedData],
 			})
 
 			console.log(result.data)
@@ -135,7 +135,7 @@ const CreateUsersForm = () => {
 										Mobile No.
 									</label>
 									<input
-										{...register('mobile', {
+										{...register('contactDetails', {
 											required: 'Mobile is Required...',
 											minLength: {
 												value: 10,
@@ -156,10 +156,10 @@ const CreateUsersForm = () => {
 										placeholder="Mobile Number (10 digits without space)"
 										className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
 									/>
-									{typeof errors.mobile?.message ===
+									{typeof errors.contactDetails?.message ===
 										'string' && (
 										<span className="text-red-600">
-											{errors.mobile?.message}
+											{errors.contactDetails?.message}
 										</span>
 									)}
 								</div>

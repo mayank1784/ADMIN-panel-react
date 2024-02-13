@@ -70,7 +70,12 @@ const DropdownUser = () => {
 				{adminData && (
 					<span className="hidden text-right lg:block">
 						<span className="block text-sm font-medium text-black dark:text-white">
-							{adminData && adminData.adminName}
+							{adminData.adminName &&
+								adminData.adminName
+									.toLowerCase()
+									.replace(/(?:^|\s)\w/g, (match: string) =>
+										match.toUpperCase()
+									)}
 						</span>
 						<span className="block text-xs">Admin</span>
 					</span>
@@ -84,7 +89,7 @@ const DropdownUser = () => {
 								: UserOne
 						}
 						alt="User"
-						className="h-full w-full object-cover"
+						className="rounded-full h-12 w-12 object-cover"
 					/>
 				</span>
 
