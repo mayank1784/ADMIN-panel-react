@@ -11,6 +11,7 @@ import AutoComplete from '../components/Forms/SelectGroup/AutoComplete'
 import { useState } from 'react'
 import React from 'react'
 import { toast } from 'react-toastify'
+import GenerateMockProductData from '../components/MockProductData/generateMockProductData'
 
 import {
 	uploadBytesResumable,
@@ -84,15 +85,15 @@ const Profile = () => {
 			// Check file type
 			const allowedTypes = ['image/jpeg', 'image/png', 'image/gif']
 			if (!allowedTypes.includes(file.type)) {
-				console.error(
-					'Invalid file type. Please select a valid image file (JPEG, PNG, GIF).'
+				toast.error(
+					'Invalid file type. Please select a valid image file.'
 				)
 				return
 			}
 			// Check file size (max size: 500 KB)
 			const maxSize = 500 * 1024 // 500 KB in bytes
 			if (file.size > maxSize) {
-				console.error(
+				toast.error(
 					'File size exceeds the limit. Please select a file smaller than 500 KB.'
 				)
 				return
@@ -1485,6 +1486,7 @@ const Profile = () => {
 								</svg> */}
 								<input
 									type="file"
+									accept="image/*"
 									name="profile"
 									id="profile"
 									className="sr-only"
@@ -1672,6 +1674,7 @@ const Profile = () => {
 							</form>
 							{/* </form> */}
 						</div>
+						<GenerateMockProductData />
 
 						{/* <div className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
 							<div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">

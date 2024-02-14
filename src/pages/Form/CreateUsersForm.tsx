@@ -19,6 +19,7 @@ import DatePickerTwo from '../../components/Forms/DatePicker/DatePickerTwo'
 import SelectGroupTwo from '../../components/Forms/SelectGroup/SelectGroupTwo'
 import MultiSelect from '../../components/Forms/MultiSelect'
 import GenerateQRAndPdf from '../../components/Qr/GenerateQr'
+import { toast } from 'react-toastify'
 
 const CreateUsersForm = () => {
 	const {
@@ -54,6 +55,16 @@ const CreateUsersForm = () => {
 
 			console.log(result.data)
 			setIsLoading(false)
+			toast.success('User Created', {
+				position: 'top-center',
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: 'light',
+			})
 		} catch (error) {
 			console.log(error)
 			setIsLoading(false)
